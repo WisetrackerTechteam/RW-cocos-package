@@ -132,7 +132,7 @@ in-App 에서 발생하는 다양한 이벤트를 분석하기 위해서는 분�
 #### <a id="4.1"></a> 4.1 회원 분석
 사용자의 다양한 정보를 분석할 수 있습니다
 
-```java 
+```c++
 DOT.setUser(
     new User.Builder()
     .setGender("M")
@@ -253,7 +253,7 @@ CocosHelper::logScreen(const_cast<char *>(c));
 이 분석 결과를 통해서 검색 결과의 상단에 노출되는 항목들이 적절한지 가늠할 수 있습니다. 
 검색 결과 페이지에서 특정 항목이 클릭되면, 해당 화면으로 이동하기 이전에 아래와 같이 분석 코드를 적용하세요.
 
-```java
+```c++
 Json::Value click;
 click["ckTp] = "SCH";
 Json::StreamWriterBuilder builder;
@@ -380,7 +380,7 @@ CocosHelper::logPurchase(const_cast<char *>(c));
 
 (2) Purchase Multi Variables 분석 : Multi Variables 항목과 연계하여 Purchase 분석도 가능합니다. 이벤트가 발생한 시점에 아래와 같이 Purchase Data + Multi Variables Data 를 SDK로 전달하세요.
 
-```java
+```c++
 Json::Value purchase;
 purchase["mvt1"] = "purchase mvt 1";
 purchase["mvt2"] = "purchase mvt 2";
