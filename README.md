@@ -233,7 +233,7 @@ DOT::logScreen(pageJson);
 검색 결과가 보여지는 화면에 분석 코드를 적용합니다.
 
 ```c++
-    // 사용자가 '통합 검색' 카테고리에서 '청바지' 검색어로 '1200개의 검색 결과를 보았을떄 적용 예시 
+// 사용자가 '통합 검색' 카테고리에서 '청바지' 검색어로 '1200개의 검색 결과를 보았을떄 적용 예시 
 Json::Value page;
 page["skwd"] = "청바지";
 page["scart"] = "통합검색";
@@ -254,7 +254,7 @@ DOT::logScreen(pageJson);
 
 ```c++
 Json::Value click;
-click["ckTp] = "SCH";
+click["ckTp"] = "SCH";
 Json::StreamWriterBuilder builder;
 std::string clickJson = Json::writeString(builder, click);
 DOT::logClick(clickJson);
