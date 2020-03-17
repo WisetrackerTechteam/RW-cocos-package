@@ -66,7 +66,7 @@ extern "C"
 		}
 	}
 
-	static bool getStaticMethodInfo(JniMethodInfo &methodinfo, const char *methodName, const char *methodSignature) {
+	static bool getStaticMethodInfo(JniMethodInfo &methodInfo, const char *methodName, const char *methodSignature) {
 		JNIEnv *pEnv = getJNIEnv();
 	    if (!pEnv) {
 	        return false;
@@ -82,9 +82,9 @@ extern "C"
 			pEnv->DeleteLocalRef(classId);
 			return false;
 		}
-		methodinfo.env = pEnv;
-		methodinfo.classId = classId;
-		methodinfo.methodId = methodId;
+        methodInfo.env = pEnv;
+        methodInfo.classId = classId;
+        methodInfo.methodId = methodId;
 		return true;
 	}
 
@@ -106,25 +106,25 @@ extern "C"
 		methodInfo.env->DeleteLocalRef(methodInfo.classId);
 	}
 
-	static void callStaticMethodWithStringParam(const char*methodName, const char* param) {
+	static void callStaticMethodWithStringParam(const char*methodName, std::string param) {
 		JniMethodInfo methodInfo;
 		if (!getStaticMethodInfo(methodInfo, methodName, "(Ljava/lang/String;)V")) {
 			return;
 		}
-		jstring paramName = methodInfo.env->NewStringUTF(param);
+		jstring paramName = methodInfo.env->NewStringUTF(param.c_str());
 		methodInfo.env->CallStaticVoidMethod(methodInfo.classId, methodInfo.methodId, paramName);
 		methodInfo.env->DeleteLocalRef(paramName);
 		methodInfo.env->DeleteLocalRef(methodInfo.classId);
 	}
 
-	static void callStaticMethodWithStringStringStringParam(const char*methodName, const char* param1, const char* param2, const char* param3) {
+	static void callStaticMethodWithStringStringStringParam(const char*methodName, const char* param1, const char* param2, std::string param3) {
 		JniMethodInfo methodInfo;
 		if (!getStaticMethodInfo(methodInfo, methodName, "(Ljava/lang/String;)V")) {
 			return;
 		}
 		jstring paramName1 = methodInfo.env->NewStringUTF(param1);
 		jstring paramName2 = methodInfo.env->NewStringUTF(param2);
-		jstring paramName3 = methodInfo.env->NewStringUTF(param3);
+		jstring paramName3 = methodInfo.env->NewStringUTF(param3.c_str());
 		methodInfo.env->CallStaticVoidMethod(methodInfo.classId, methodInfo.methodId, paramName1, paramName2, paramName3);
 		methodInfo.env->DeleteLocalRef(paramName1);
 		methodInfo.env->DeleteLocalRef(paramName2);
@@ -134,70 +134,70 @@ extern "C"
 
 } // extern "C"
 
-void CocosHelper::setUser(char* userString) {
-	callStaticMethodWithStringParam("setUser", userString);
+void DOT::setUser(std::string userJson) {
+	callStaticMethodWithStringParam("setUser", userJson);
 }
 
-void CocosHelper::setUserLogout() {
+void DOT::setUserLogout() {
 	callStaticMethod("setUserLogout");
 }
 
 // DOT
-void CocosHelper::onPlayStart() {
+void DOT::onPlayStart() {
 	callStaticMethod("onPlayStart");
 }
 
-void CocosHelper::onPlayStart(int period) {
+void DOT::onPlayStart(int period) {
 	callStaticMethodWithIntParam("onPlayStart", period);
 }
 
-void CocosHelper::onPlayStop() {
+void DOT::onPlayStop() {
 	callStaticMethod("onPlayStop");
 }
 
-void CocosHelper::onStartPage() {
+void DOT::onStartPage() {
 	callStaticMethod("onStartPage");
 }
 
-void CocosHelper::onStopPage() {
+void DOT::onStopPage() {
 	callStaticMethod("onStopPage");
 }
 
-void CocosHelper::logScreen(char* userString) {
-	callStaticMethodWithStringParam("logScreen", userString);
+void DOT::logScreen(std::string pageJson) {
+	callStaticMethodWithStringParam("logScreen", pageJson);
 }
 
-void CocosHelper::logPurchase(char* purchaseString) {
-	callStaticMethodWithStringParam("logPurchase", purchaseString);
+void DOT::logPurchase(std::string purchaseJson) {
+	callStaticMethodWithStringParam("logPurchase", purchaseJson);
 }
 
-void CocosHelper::logEvent(char* eventString) {
-	callStaticMethodWithStringParam("logEvent", eventString);
+void DOT::logEvent(std::string eventJson) {
+	callStaticMethodWithStringParam("logEvent", eventJson);
 }
 
-void CocosHelper::logClick(char* clickString) {
-	callStaticMethodWithStringParam("logClick", clickString);
+void DOT::logClick(std::string clickJson) {
+	callStaticMethodWithStringParam("logClick", clickJson);
 }
 
 // DOX
-void CocosHelper::groupIdentify(char* key, char* value, char* xIdentifyString) {
-	callStaticMethodWithStringStringStringParam("groupIdentify", key, value, xIdentifyString);
+void DOX::groupIdentify(char* key, char* value, std::string xIdentifyJson) {
+	callStaticMethodWithStringStringStringParam("groupIdentify", key, value, xIdentifyJson);
 }
 
-void CocosHelper::userIdentify(char* xIdentifyString) {
-	callStaticMethodWithStringParam("userIdentify", xIdentifyString);
+void DOX::userIdentify(std::string xIdentifyJson) {
+	callStaticMethodWithStringParam("userIdentify", xIdentifyJson);
 }
 
-void CocosHelper::logXEvent(char* xEventString) {
-	callStaticMethodWithStringParam("logXEvent", xEventString);
+void DOX::logXEvent(std::string xEventJson) {
+	callStaticMethodWithStringParam("logXEvent", xEventJson);
 }
 
-void CocosHelper::logXConversion(char* xConversionStirng) {
-	callStaticMethodWithStringParam("logXConversion", xConversionStirng);
+void DOX::logXConversion(std::string xConversionJson) {
+	callStaticMethodWithStringParam("logXConversion", xConversionJson);
 }
 
-void CocosHelper::logXPurchase(char* xPurchaseString) {
-	callStaticMethodWithStringParam("logXPurchase", xPurchaseString);
+void DOX::logXPurchase(std::string xPurchaseJson) {
+	callStaticMethodWithStringParam("logXPurchase", xPurchaseJson);
 }
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -205,25 +205,22 @@ void CocosHelper::logXPurchase(char* xPurchaseString) {
 
 #else
 
-void CocosHelper::setUser(char* userString) {}
-void CocosHelper::setUserLogout() {}
-// DOT
-void CocosHelper::onPlayStart() {}
-void CocosHelper::onPlayStart(int period) {}
-void CocosHelper::onPlayStop() {}
-void CocosHelper::onStartPage() {}
-void CocosHelper::onStopPage() {}
-void CocosHelper::logScreen(char* userString) {}
-void CocosHelper::logPurchase(char* purchaseString) {}
-void CocosHelper::logEvent(char* eventString) {}
-void CocosHelper::logClick(char* clickString) {}
-// DOX
-void CocosHelper::groupIdentify(char* key, char* value, char* xIdentifyString) {}
-void CocosHelper::userIdentify(char* xIdentifyString) {}
-void CocosHelper::logXEvent(char* xEventString) {}
-void CocosHelper::logXConversion(char* xConversionStirng) {}
-void CocosHelper::logXPurchase(char* xPurchaseString) {}
-
+void DOT::setUser(std::string userJson) {}
+void DOT::setUserLogout() {}
+void DOT::onPlayStart() {}
+void DOT::onPlayStart(int period) {}
+void DOT::onPlayStop() {}
+void DOT::onStartPage() {}
+void DOT::onStopPage() {}
+void DOT::logScreen(std::string userJson) {}
+void DOT::logPurchase(std::string purchaseJson) {}
+void DOT::logEvent(std::string eventJson) {}
+void DOT::logClick(std::string clickJson) {}
+void DOX::groupIdentify(char* key, char* value, std::string xIdentifyString) {}
+void DOX::userIdentify(std::string xIdentifyString) {}
+void DOX::logXEvent(std::string xEventString) {}
+void DOX::logXConversion(std::string xConversionStirng) {}
+void DOX::logXPurchase(std::string xPurchaseString) {}
 
 #endif
 
