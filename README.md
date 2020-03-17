@@ -106,7 +106,7 @@ dependencies {
 	android:value="false" />
 ```
 
-### 2.4 초기화
+#### 2.4 초기화
 -> 안드로이드 시작시 실행되는 Activity에 다음의 초기화 코드를 적용해 주세요.
 
 ```java
@@ -129,17 +129,22 @@ public class AppActivity extends Cocos2dxActivity {
 in-App 에서 발생하는 다양한 이벤트를 분석하기 위해서는 분석 대상 앱에서 해당 이벤트가 발생된 시점에, SDK에게 해당 정보를 전달해야 합니다.
 이어지는 내용에서는 주요 이벤트들의 분석 방법에 대해서 자세하게 설명합니다.
 
+```c++
+// SDK를 사용하는 .cpp 파일에서 Dop.h 파일을 include 해주세요.
+#include "Dop.h"
+```
+
 #### <a id="4.1"></a> 4.1 회원 분석
 사용자의 다양한 정보를 분석할 수 있습니다
 
 ```c++
-DOT.setUser(
-    new User.Builder()
-    .setGender("M")
-    .setAge("A")
-    .setAttr1("attr1")
-    .build()
-);
+User user;
+user.SetGender("M");
+user.SetAge("30");
+user.SetAttr1("attr1");
+user.SetMember("member");
+user.SetMemberGrade("VIP");
+DOT::setUser(user.GetJson());
 ```
 **\<User Class>**
 
@@ -166,10 +171,9 @@ DOT.setUser(
 Json::Value page;
 page["pi"] = "Your Page Identity Value";
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, page);
-const char *c = jsonStr.c_str();
+std::string pageJson = Json::writeString(builder, page);
 CocosHelper::onStartPage();
-CocosHelper::logScreen(const_cast<char *>(c));
+CocosHelper::logScreen(pageJson);
 ```
 
 (2) 상품 페이지 분석 : e-commerce 앱의 경우 상품 상세 페이지에 분석코드를 적용하여, 상품별 조회수를 분석합니다.
@@ -192,10 +196,9 @@ productArray.append(product);
 page["products"] = productArray;
 
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, page);
-const char *c = jsonStr.c_str();
+std::string pageJson = Json::writeString(builder, page);
 CocosHelper::onStartPage();
-CocosHelper::logScreen(const_cast<char *>(c));
+CocosHelper::logScreen(pageJson);
 ```
 
 (3) Contents Path 분석 : 앱의 각 페이지에 Hierarchical 한 Contents Path값을 적용하면, 각 컨텐츠의 사용 비율을 카테고리별로 그룹화 하여 분석이 가능합니다.
@@ -206,10 +209,9 @@ Json::Value page;
 // Contents Path로 전달되는 값에는 ' 와 " 기호는 사용할 수 없습니다.
 page["cp"] =  "^path^path";
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, page);
-const char *c = jsonStr.c_str();
+std::string pageJson = Json::writeString(builder, page);
 CocosHelper::onStartPage();
-CocosHelper::logScreen(const_cast<char *>(c));
+CocosHelper::logScreen(pageJson);
 ```
 
 (4) Multi Variables 분석 (사용자 정의 변수) : Multi Variables 분석 항목은 사용자가 그 항목에 전달할 값을 정의하여 사용이 가능합니다. 
@@ -223,10 +225,9 @@ page["mvt3"] = "page mvt 3";
 page["mvt4"] = "page mvt 4";
 page["mvt5"] = "page mvt 5";
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, page);
-const char *c = jsonStr.c_str();
+std::string pageJson = Json::writeString(builder, page);
 CocosHelper::onStartPage();
-CocosHelper::logScreen(const_cast<char *>(c));
+CocosHelper::logScreen(pageJson);
 ```
 
 (5) 내부 검색어 분석 : 앱에 검색기능이 있는 경우, 사용자가 입력한 검색어와, 검색한 카테고리, 검색 결과수등을 분석하면, 검색 기능의 활용성을 측정할 수 있습니다. 
@@ -239,10 +240,9 @@ page["skwd"] = "청바지";
 page["scart"] = "통합검색";
 page["sresult"] = "1200";
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, page);
-const char *c = jsonStr.c_str();
+std::string pageJson = Json::writeString(builder, page);
 CocosHelper::onStartPage();
-CocosHelper::logScreen(const_cast<char *>(c));
+CocosHelper::logScreen(pageJson);
 ```
 
 #### <a id="4.3"></a> 4.3 Click 분석
@@ -257,9 +257,8 @@ CocosHelper::logScreen(const_cast<char *>(c));
 Json::Value click;
 click["ckTp] = "SCH";
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, click);
-const char *c = jsonStr.c_str();
-CocosHelper::logClick(const_cast<char *>(c));
+std::string clickJson = Json::writeString(builder, click);
+CocosHelper::logClick(clickJson);
 ```
 
 (2) 장바구니 담긴 상품 분석 : e-commerce 관련된 비즈니스의 경우 장바구니에 담긴 상품을 분석할 수 있습니다.
@@ -273,9 +272,8 @@ product["pnc"] = "상품코드";
 product["pnAtr1"] = "상품속성#1";
 click["product"] = product;
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, click);
-const char *c = jsonStr.c_str();
-CocosHelper::logClick(const_cast<char *>(c));
+std::string clickJson = Json::writeString(builder, click);
+CocosHelper::logClick(clickJson);
 ```
 
 (3) 클릭 이벤트 분석 : 앱에 존재하는 다양한 클릭 요소 (배너, 버튼 등)에 대해서, 클릭수를 분석합니다. 
@@ -285,9 +283,8 @@ CocosHelper::logClick(const_cast<char *>(c));
 Json::Value click;
 click["ckTp"] = "CKC";
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, click);
-const char *c = jsonStr.c_str();
-CocosHelper::logClick(const_cast<char *>(c));
+std::string clickJson = Json::writeString(builder, click);
+CocosHelper::logClick(clickJson);
 ```
 **\*클릭된 요소의 ID값으로 단일 문자열로된 값을 전달하기도 하지만, 앞에서 설명한 Contents Path 분석 과 같이, Hierarchical 한 Path값을 전달하여 추후 데이터 조회시 Categorizing 하게 보기도 가능합니다. Hierarchical 한 Path 값을 사용하고자 할때 값에 대한 제약사항은 Contents Path 분석 과 동일합니다.**
 
@@ -302,9 +299,8 @@ click["mvt3"] = "click mvt 3";
 click["mvt4"] = "click mvt 4";
 click["mvt5"] = "click mvt 5";
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, click);
-const char *c = jsonStr.c_str();
-CocosHelper::logClick(const_cast<char *>(c));
+std::string clickJson = Json::writeString(builder, click);
+CocosHelper::logClick(clickJson);
 ```
 #### <a id="4.4"></a> 4.4 Conversion 분석
 가장 대표적으로 구매 전환 을 생각할 수 있습니다. 하지만, 앱내에는 앱이 제공하는 서비스에 따라서 매우 다양한 Conversion이 존재할 수 있습니다. 
@@ -320,9 +316,8 @@ SDK는 총 80개의 Conversion을 사용자가 정의하고, 분석 코드를 �
 Json::Value event;
 event["g1"] = "goal 1";
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, event);
-const char *c = jsonStr.c_str();
-CocosHelper::logEvent(const_cast<char *>(c));
+std::string eventJson = Json::writeString(builder, event);
+CocosHelper::logEvent(eventJson);
 ```
 
 (1) Conversion 상품 분석 : Conversion은 단순하게 발생 횟수를 측정할 수도 있으나, 상품과 연계하여 상품별로 정의한 Conversion의 발생 횟수 측정도 가능합니다. 이벤트가 발생한 시점에 아래와 같이 Conversion Data + Product Data를 SDK로 전달하세요.
@@ -335,9 +330,8 @@ product["pnc"] = "상품코드";
 product["pnAtr1"] = "상품속성#1";
 event["product"] = product;
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, event);
-const char *c = jsonStr.c_str();
-CocosHelper::logEvent(const_cast<char *>(c));
+std::string eventJson = Json::writeString(builder, event);
+CocosHelper::logEvent(eventJson);
 ```
 
 (2) Conversion Multi Variables 분석 : Multi Variables 항목과 연계하여 Conversion의 발생 횟수 측정도 가능합니다. 이벤트가 발생한 시점에 아래와 같이 Conversion Data + Multi Variables Data를 SDK로 전달하세요.
@@ -349,9 +343,8 @@ event["mvt3"] = "conversion mvt 3";
 event["mvt4"] = "conversion mvt 4";
 event["mvt5"] = "conversion mvt 5";
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, event);
-const char *c = jsonStr.c_str();
-CocosHelper::logEvent(const_cast<char *>(c));
+std::string eventJson = Json::writeString(builder, event);
+CocosHelper::logEvent(eventJson);
 ```
 
 #### <a id="4.5"></a> 4.5 Purchase 분석
@@ -373,9 +366,8 @@ product["ea"] = "1";
 productArray.append(product);
 purchase["products"] = productArray;
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, purchase);
-const char *c = jsonStr.c_str();
-CocosHelper::logPurchase(const_cast<char *>(c));
+std::string purchaseJson = Json::writeString(builder, purchase);
+CocosHelper::logPurchase(purchaseJson);
 ```
 
 (2) Purchase Multi Variables 분석 : Multi Variables 항목과 연계하여 Purchase 분석도 가능합니다. 이벤트가 발생한 시점에 아래와 같이 Purchase Data + Multi Variables Data 를 SDK로 전달하세요.
@@ -388,9 +380,8 @@ purchase["mvt3"] = "purchase mvt 3";
 purchase["mvt4"] = "purchase mvt 4";
 purchase["mvt5"] = "purchase mvt 5";
 Json::StreamWriterBuilder builder;
-std::string jsonStr = Json::writeString(builder, purchase);
-const char *c = jsonStr.c_str();
-CocosHelper::logPurchase(const_cast<char *>(c));
+std::string purchaseJson = Json::writeString(builder, purchase);
+CocosHelper::logPurchase(purchaseJson);
 ```
 
 ### <a id="5"></a> 5. 푸시 분석
