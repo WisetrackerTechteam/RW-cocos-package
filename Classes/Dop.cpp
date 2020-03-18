@@ -2,12 +2,9 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
-
 #include <jni.h>
 #include <android/log.h>
 #include "platform/android/jni/JniHelper.h"
-
-
 
 #define  LOG_TAG    "[wisetracker]"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -136,73 +133,73 @@ extern "C"
 
 } // extern "C"
 
-void DOT::initialization() {
+void DOTBridge::initialization() {
 	callStaticMethod("initialization");
 }
 
-void DOT::setUser(std::string userJson) {
+void DOTBridge::setUser(std::string userJson) {
 	callStaticMethodWithStringParam("setUser", userJson);
 }
 
-void DOT::setUserLogout() {
+void DOTBridge::setUserLogout() {
 	callStaticMethod("setUserLogout");
 }
 
 // DOT
-void DOT::onPlayStart() {
+void DOTBridge::onPlayStart() {
 	callStaticMethod("onPlayStart");
 }
 
-void DOT::onPlayStart(int period) {
+void DOTBridge::onPlayStart(int period) {
 	callStaticMethodWithIntParam("onPlayStart", period);
 }
 
-void DOT::onPlayStop() {
+void DOTBridge::onPlayStop() {
 	callStaticMethod("onPlayStop");
 }
 
-void DOT::onStartPage() {
+void DOTBridge::onStartPage() {
 	callStaticMethod("onStartPage");
 }
 
-void DOT::onStopPage() {
+void DOTBridge::onStopPage() {
 	callStaticMethod("onStopPage");
 }
 
-void DOT::logScreen(std::string pageJson) {
+void DOTBridge::logScreen(std::string pageJson) {
 	callStaticMethodWithStringParam("logScreen", pageJson);
 }
 
-void DOT::logPurchase(std::string purchaseJson) {
+void DOTBridge::logPurchase(std::string purchaseJson) {
 	callStaticMethodWithStringParam("logPurchase", purchaseJson);
 }
 
-void DOT::logEvent(std::string eventJson) {
+void DOTBridge::logEvent(std::string eventJson) {
 	callStaticMethodWithStringParam("logEvent", eventJson);
 }
 
-void DOT::logClick(std::string clickJson) {
+void DOTBridge::logClick(std::string clickJson) {
 	callStaticMethodWithStringParam("logClick", clickJson);
 }
 
 // DOX
-void DOX::groupIdentify(char* key, char* value, std::string xIdentifyJson) {
+void DOXBridge::groupIdentify(char* key, char* value, std::string xIdentifyJson) {
 	callStaticMethodWithStringStringStringParam("groupIdentify", key, value, xIdentifyJson);
 }
 
-void DOX::userIdentify(std::string xIdentifyJson) {
+void DOXBridge::userIdentify(std::string xIdentifyJson) {
 	callStaticMethodWithStringParam("userIdentify", xIdentifyJson);
 }
 
-void DOX::logXEvent(std::string xEventJson) {
+void DOXBridge::logXEvent(std::string xEventJson) {
 	callStaticMethodWithStringParam("logXEvent", xEventJson);
 }
 
-void DOX::logXConversion(std::string xConversionJson) {
+void DOXBridge::logXConversion(std::string xConversionJson) {
 	callStaticMethodWithStringParam("logXConversion", xConversionJson);
 }
 
-void DOX::logXPurchase(std::string xPurchaseJson) {
+void DOXBridge::logXPurchase(std::string xPurchaseJson) {
 	callStaticMethodWithStringParam("logXPurchase", xPurchaseJson);
 }
 
