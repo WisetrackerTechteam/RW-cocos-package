@@ -1,11 +1,12 @@
 #ifndef __DOP_H__
 #define __DOP_H__
 
-#include <json/json.h>
+#include "json.h"
 #include "cocos2d.h"
 
-class DOT {
+class DOTBridge {
 public:
+static void initialization();
 static void setUser(std::string userJson);
 static void setUserLogout();
 static void onPlayStart();
@@ -19,7 +20,7 @@ static void logEvent(std::string eventJson);
 static void logClick(std::string clickJson);
 };
 
-class User {
+class UserBridge {
 private:
 Json::Value user;
 public:
@@ -61,7 +62,7 @@ public:
     }
 };
 
-class DOX {
+class DOXBridge {
 public:
     static void groupIdentify(char* key, char* value, std::string xIdentifyJson);
     static void userIdentify(std::string xIdentifyJson);

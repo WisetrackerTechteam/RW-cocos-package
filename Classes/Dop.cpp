@@ -1,18 +1,20 @@
-#include "dop.h"
+#include "Dop.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
 
 #include <jni.h>
 #include <android/log.h>
 #include "platform/android/jni/JniHelper.h"
+
+
 
 #define  LOG_TAG    "[wisetracker]"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 #define  DOP_CLASS_NAME "com/sdk/wisetracker/cocos/CocosHelper"
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-
-
+#include "DOTInterface.h"
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -202,6 +204,62 @@ void DOX::logXPurchase(std::string xPurchaseJson) {
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
+extern "C" { // -- we define our external method to be in C.
+    void DOTBridge::initialization() {
+        DOTInterface::initialization();
+    }
+
+    void DOTBridge::setUser(std::string userJson) {
+        DOTInterface::setUser(userJson.c_str());
+    }
+
+    void DOTBridge::setUserLogout() {
+        DOTInterface::setUserLogout();
+    }
+
+    void DOTBridge::onPlayStart() {
+        DOTInterface::onPlayStart();
+    }
+
+    void DOTBridge::onPlayStart(int period) {
+        DOTInterface::onPlayStartWith(period);
+    }
+
+    void DOTBridge::onPlayStop() {
+        DOTInterface::onPlayStop();
+    }
+
+    void DOTBridge::onStartPage() {
+        DOTInterface::onStartPage();
+    }
+
+    void DOTBridge::onStopPage() {
+        DOTInterface::onStopPage();
+    }
+
+    void DOTBridge::logScreen(std::string screenJson) {
+        DOTInterface::logScreen(screenJson.c_str());
+    }
+
+    void DOTBridge::logPurchase(std::string purchaseJson) {
+        DOTInterface::logPurchase(purchaseJson.c_str());
+    }
+
+    void DOTBridge::logEvent(std::string eventJson) {
+        DOTInterface::logEvent(eventJson.c_str());
+    }
+
+    void DOTBridge::logClick(std::string clickJson) {
+        DOTInterface::logClick(clickJson.c_str());
+    }
+
+    void DOXBridge::groupIdentify(char* key, char* value, std::string xIdentifyString) {}
+    void DOXBridge::userIdentify(std::string xIdentifyString) {}
+    void DOXBridge::logXEvent(std::string xEventString) {}
+    void DOXBridge::logXConversion(std::string xConversionStirng) {}
+    void DOXBridge::logXPurchase(std::string xPurchaseString) {}
+
+}
 
 #else
 
@@ -212,7 +270,7 @@ void DOT::onPlayStart(int period) {}
 void DOT::onPlayStop() {}
 void DOT::onStartPage() {}
 void DOT::onStopPage() {}
-void DOT::logScreen(std::string userJson) {}
+void DOT::logScreen(std::string screenJson) {}
 void DOT::logPurchase(std::string purchaseJson) {}
 void DOT::logEvent(std::string eventJson) {}
 void DOT::logClick(std::string clickJson) {}
