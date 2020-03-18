@@ -6,6 +6,7 @@
 
 class DOT {
 public:
+static void initialization();
 static void setUser(std::string userJson);
 static void setUserLogout();
 static void onPlayStart();

@@ -1,4 +1,4 @@
-#include "dop.h"
+#include "Dop.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
@@ -134,6 +134,10 @@ extern "C"
 
 } // extern "C"
 
+void DOT::initialization() {
+	callStaticMethod("initialization");
+}
+
 void DOT::setUser(std::string userJson) {
 	callStaticMethodWithStringParam("setUser", userJson);
 }
@@ -205,6 +209,7 @@ void DOX::logXPurchase(std::string xPurchaseJson) {
 
 #else
 
+void DOT::initialization() {}
 void DOT::setUser(std::string userJson) {}
 void DOT::setUserLogout() {}
 void DOT::onPlayStart() {}
