@@ -29,8 +29,8 @@ list(APPEND GAME_HEADER
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar']) 
     ....
-    implementation 'com.sdk.wisetracker.base:base_module_test:0.0.74'
-    implementation 'com.sdk.wisetracker.new_dot:new_dot_module_test:0.0.74'
+    implementation 'com.sdk.wisetracker.base:base_module_test:0.0.75'
+    implementation 'com.sdk.wisetracker.new_dot:new_dot_module_test:0.0.75'
 }
 ```
 
