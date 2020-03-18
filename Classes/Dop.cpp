@@ -136,6 +136,10 @@ extern "C"
 
 } // extern "C"
 
+void DOT::initialization() {
+	callStaticMethod("initialization");
+}
+
 void DOT::setUser(std::string userJson) {
 	callStaticMethodWithStringParam("setUser", userJson);
 }
@@ -263,6 +267,7 @@ extern "C" { // -- we define our external method to be in C.
 
 #else
 
+void DOT::initialization() {}
 void DOT::setUser(std::string userJson) {}
 void DOT::setUserLogout() {}
 void DOT::onPlayStart() {}
