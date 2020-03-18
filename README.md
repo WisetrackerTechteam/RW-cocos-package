@@ -106,21 +106,6 @@ dependencies {
 	android:value="false" />
 ```
 
-#### 2.4 초기화
--> 안드로이드 시작시 실행되는 Activity에 다음의 초기화 코드를 적용해 주세요.
-
-```java
-public class AppActivity extends Cocos2dxActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.setEnableVirtualButton(false);
-        super.onCreate(savedInstanceState);
-	/* 중략 */
-        CocosHelper.initialization(this); // 초기화 코드 삽입
-    }
-}
-```
-
 ### 3. IOS 설정
 
 
