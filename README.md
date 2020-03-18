@@ -1,7 +1,7 @@
 ### 1. Cocos2d-x 플러그인 설치 (AOS/IOS 공통 설정)
 
 #### 1.1 Cocos2d-x 패키지 다운로드
--> [Cocos2d-x 플러그인 패키지](https://github.com/WisetrackerTechteam/RW-cocos-package) 다운로드 해주세요
+-> Cocos2d-x 플러그인 패키지를 다운로드 해주세요.
 
 ### 2. Android
 
