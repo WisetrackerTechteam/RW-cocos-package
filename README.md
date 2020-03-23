@@ -108,6 +108,8 @@ dependencies {
 
 ### 3. IOS 설정
 
+#### 3.1 Other Linker Flag Obj-C 옵션 추가
+#### 3.2 GameController.framework, MediaPlayer.framework 추가
 
 ### <a id="4"></a> 4. 고급 컨텐츠 분석 (optional)
 
