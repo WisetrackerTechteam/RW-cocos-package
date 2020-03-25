@@ -1,16 +1,16 @@
-### 1. Cocos2d-x 플러그인 설치 (AOS/IOS 공통 설정)
+## 1. Cocos2d-x 플러그인 설치 (AOS/IOS 공통 설정)
 
-#### 1.1 Cocos2d-x 패키지 다운로드
+### 1.1 Cocos2d-x 패키지 다운로드
 -> Cocos2d-x 플러그인 패키지를 다운로드 해주세요.
 
-### 2. Android
+## 2. Android
 
-#### 2.1 Android 설정
+### 2.1 Android 설정
 
-##### <a id="JAR"></a> a) wisetracker-cocos.jar 삽입
+#### <a id="JAR"></a> a) wisetracker-cocos.jar 삽입
 -> 다운로드 받은 폴더의 (proj.android/libs/wisetracker-cocos.jar) 파일을 안드로이드 스튜디오 Project/app/libs 폴더에에 삽입해 주세요.
 
-##### <a id="CLASSES"></a> b) Classes 파일 삽입
+#### <a id="CLASSES"></a> b) Classes 파일 삽입
 -> Cocos2dx 프로젝트의 Classes 폴더에 복사 Classes 폴더에 들어있는 파일(Dop.cpp, Dop.h)을 복사해 주세요.
 -> Cocos2dx 프로젝트의 CMakeLists.txt 파일에 소스파일과 헤더파일을 선언해 주세요.
 ```script
@@ -22,7 +22,7 @@ list(APPEND GAME_HEADER
      )
 ```
 
-##### <a id="DOWNLOAD"></a> c) SDK Download
+#### <a id="DOWNLOAD"></a> c) SDK Download
 -> Android 프로젝트 app/build.gradle 파일 dependencies 불록에 의존성 추가
 
 ```gradle
@@ -34,10 +34,10 @@ dependencies {
 }
 ```
 
-#### 2.2 strings.xml 설정
+### 2.2 strings.xml 설정
 -> app/res/values/strings.xml
 
-##### a) dotAuthorizationKey 설정
+#### a) dotAuthorizationKey 설정
 -> 발급받은 App Analytics Key 정보 추가
 
 ```xml
@@ -54,10 +54,10 @@ dependencies {
 </string-array>
 ```
 
-#### 2.3 AndroidManifest.xml 설정 
+### 2.3 AndroidManifest.xml 설정 
 -> app/AndroidManifest.xml
 
-##### a) Http 통신 허용 설정
+#### a) Http 통신 허용 설정
 -> 프로젝트의 **Target API 28 이상**일 경우 Http 통신 허용을 설정해 주세요.
 
 ```xml
@@ -79,7 +79,7 @@ dependencies {
 </network-security-config>
 ```
 
-##### b) 딥링크 설정
+#### b) 딥링크 설정
 -> 딥링크로 진입할 **android:scheme="YOUR_SCHEME"** 스키마와 **android:host="YOUR_HOST"** 호스트를 설정해 주세요.
               
 ```xml
@@ -97,7 +97,7 @@ dependencies {
 </activity>
 ```
 
-##### c) 인스톨 레퍼러 활성화 여부 (필요시 설정)
+#### c) 인스톨 레퍼러 활성화 여부 (필요시 설정)
 
 ```xml
 <!-- true 변경시 Wisetracker 통한 인스톨 레퍼러 미수신 -->
@@ -106,12 +106,65 @@ dependencies {
 	android:value="false" />
 ```
 
-### 3. IOS 설정
+## 3. iOS 설정
 
-#### 3.1 Other Linker Flag Obj-C 옵션 추가
-#### 3.2 GameController.framework, MediaPlayer.framework 추가
+### 3.1 CouchbaseLite.framework, GameController.framework, MediaPlayer.framework 추가
+제공한 CouchbaseLite.framework파일을 **Targets - General - Frameworkd, Libraries, and embedded Content** 메뉴에 
+**Embed & Sign**옵션으로 추가합니다. 
 
-### <a id="4"></a> 4. 고급 컨텐츠 분석 (optional)
+기본 제공되는 GameController.framework, MediaPlayer.framework 도 추가해줍니다.
+
+![](http://www.wisetracker.co.kr/wp-content/uploads/2020/03/cocos2d_frameworks.png)
+
+### 3.2 Other Linker Flag -ObjC 옵션 추가
+
+**Tagets -  Build Settings - Other Linker Flags**에 **-ObjC** 옵션을 추가합니다.
+![] (http://www.wisetracker.co.kr/wp-content/uploads/2020/03/cocos2d_otherlinker.png)
+
+### 3.3 info.plist 세팅
+XCode 프로젝트의 info.plist 파일에 제공받은 App Analytics Key 정보를 추가합니다
+info.plist 파일을 open할때 **list로 보기** 가 아니라 **source로 보기**를 선탁하신뒤, 제공받으신 Key를 **Ctrl+V** 하시면 됩니다
+제공받은 Key값은 아래의 예시와 같이 xml 형태를 가지고 있는 데이터 입니다
+
+```xml
+<key>dotAuthorizationKey</key>
+<dict>
+	<key>domain</key>
+	<string>http://stg-app-wcs.naver.com</string>
+	<key>serviceNumber</key>
+	<string>103</string>
+	<key>expireDate</key>
+	<string>14</string>
+	<key>isDebug</key>
+	<string>true</string>
+	<key>isInstallRetention</key>
+	<string>true</string>
+	<key>isFingerPrint</key>
+	<string>true</string>
+	<key>accessToken</key>
+	<string></string>
+  <key>useMode</key>
+  <string>2</string>
+</dict>
+```
+
+위의 Key 중에 isDebug는 collector 로 전송되는 분석 데이터를 Xcode 에서 확인할 수 있게 해주는 boolean 변수로 사용되고 있습니다
+SDK를 적용해야 하는 앱 개발자는 이 값을 true로 설정하고, SDK의 기본 적용 및 추가 분석 코드 적용 과정에서 사용할 수 있습니다
+( 예를 들면 이 값을 true로 적용하여, 분석 대상이 되는 앱에 적용하여 build를 하면 Android 의 경우 logcat에서, iOS 의 경우 debug console에서 collector로 전송되는 plain text 형태의 로그 확인이 가능합니다. )
+분석 코드 적용이 완료되고, 스토어 배포시에는 해당 필드를 false로 변경하여 배포하는 것을 권장합니다.
+
+http통신을 허용하기 위해 NSAppTransportSecurity 를 아래와 같이 추가합니다
+
+
+```xml
+<key>NSAppTransportSecurity</key>
+<dict>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
+</dict>
+```
+
+## <a id="4"></a> 4. 고급 컨텐츠 분석 (optional)
 
 in-App 에서 발생하는 다양한 이벤트를 분석하기 위해서는 분석 대상 앱에서 해당 이벤트가 발생된 시점에, SDK에게 해당 정보를 전달해야 합니다.
 이어지는 내용에서는 주요 이벤트들의 분석 방법에 대해서 자세하게 설명합니다.
@@ -121,7 +174,7 @@ in-App 에서 발생하는 다양한 이벤트를 분석하기 위해서는 분�
 #include "Dop.h"
 ```
 
-#### <a id="4.1"></a> 4.1 회원 분석
+### <a id="4.1"></a> 4.1 회원 분석
 사용자의 다양한 정보를 분석할 수 있습니다
 
 ```c++
@@ -148,7 +201,7 @@ DOTBridge::setUser(user.GetJson());
 | User | setAttr4(attr) | 회원 속성#4 의미하는 코드값 전달 |
 | User | setAttr5(attr) | 회원 속성#5 의미하는 코드값 전달 |
 
-#### <a id="4.2"></a> 4.2 Page 분석
+### <a id="4.2"></a> 4.2 Page 분석
 [분석 가능 Page Key](./page.md) **해당 목록에 들어있는 key 값에 한해서 분석이 가능**합니다.
 분석을 희망하는 key 값을 확인후 적용해 주세요.
 
@@ -231,7 +284,7 @@ DOTBridge::onStartPage();
 DOTBridge::logScreen(pageJson);
 ```
 
-#### <a id="4.3"></a> 4.3 Click 분석
+### <a id="4.3"></a> 4.3 Click 분석
 [분석 가능 Click Key](./click.md) **해당 목록에 들어있는 key 값에 한해서 분석이 가능**합니다.
 분석을 희망하는 key 값을 확인후 적용해 주세요.
 
@@ -288,7 +341,7 @@ Json::StreamWriterBuilder builder;
 std::string clickJson = Json::writeString(builder, click);
 DOTBridge::logClick(clickJson);
 ```
-#### <a id="4.4"></a> 4.4 Conversion 분석
+### <a id="4.4"></a> 4.4 Conversion 분석
 가장 대표적으로 구매 전환 을 생각할 수 있습니다. 하지만, 앱내에는 앱이 제공하는 서비스에 따라서 매우 다양한 Conversion이 존재할 수 있습니다. 
 또한, 이미 정의된 Conversion 일지라도, 서비스의 변화, 시대의 변화애 따라서 새로 정의되어야 하기도 하고, 사용하지 않아서 폐기되기도 합니다.
 SDK는 총 80개의 Conversion을 사용자가 정의하고, 분석 코드를 적용함으로써 앱으로 인하여 발생하는 Conversion 측정이 가능합니다. 
@@ -333,7 +386,7 @@ std::string eventJson = Json::writeString(builder, event);
 DOTBridge::logEvent(eventJson);
 ```
 
-#### <a id="4.5"></a> 4.5 Purchase 분석
+### <a id="4.5"></a> 4.5 Purchase 분석
 앱내에서 발생하는 구매 이벤트를 분석합니다. 구매 완료 페이지에서 아래와 같이 구매와 관련된 정보를 SDK에 전달하세요.
 
 [분석 가능 Purchase Key](./purchase.md) **해당 목록에 들어있는 key 값에 한해서 분석이 가능**합니다.
@@ -370,9 +423,9 @@ std::string purchaseJson = Json::writeString(builder, purchase);
 DOTBridge::logPurchase(purchaseJson);
 ```
 
-### <a id="5"></a> 5. 푸시 분석
+## <a id="5"></a> 5. 푸시 분석
 
-#### <a id="5.1"></a> 5.1 푸시 토큰 
+### <a id="5.1"></a> 5.1 푸시 토큰 
 푸시 토큰 정보를 가지고 오는 내용을 아래와 같이 추가해 주세요.
 
 (1)
@@ -407,7 +460,7 @@ public class FcmService extends FirebaseMessagingService {
 }
 ```
 
-#### <a id="5.2"></a> 5.2 푸시 수신 메시지 설정
+### <a id="5.2"></a> 5.2 푸시 수신 메시지 설정
 푸시 수신시 호출되는 onMessageReceived 메소드에 아래 내용을 추가해 주세요.
 
 ```java
@@ -422,7 +475,7 @@ public class FcmService extends FirebaseMessagingService {
 }
 ```
 
-#### <a id="5.3"></a> 5.3 푸시 클릭 설정
+### <a id="5.3"></a> 5.3 푸시 클릭 설정
 
 푸시 클릭시 앱으로 진입하는 화면에서 전달 받은 인텐트 정보를 SDK에 전달해 주세요.
 
@@ -448,7 +501,7 @@ public class PushClickActivity extends AppCompatActivity {
 }
 ```
 
-#### <a id="5.4"></a> 5.4 푸시 알림 메시지 설정
+### <a id="5.4"></a> 5.4 푸시 알림 메시지 설정
 구글 가이드 토대로 작성한 샘플 메시지 출력 예제입니다. 앱의 환경에 맞춰 적절하게 설정해 주시기 바랍니다.
 
 
