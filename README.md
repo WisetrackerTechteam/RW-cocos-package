@@ -119,6 +119,8 @@ dependencies {
 ### 3.2 Other Linker Flag -ObjC 옵션 추가
 
 **Tagets -  Build Settings - Other Linker Flags**에 **-ObjC** 옵션을 추가합니다.
+
+
 ![] (http://www.wisetracker.co.kr/wp-content/uploads/2020/03/cocos2d_otherlinker.png)
 
 ### 3.3 info.plist 세팅
