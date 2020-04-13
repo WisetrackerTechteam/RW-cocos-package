@@ -121,7 +121,7 @@ dependencies {
 **Tagets -  Build Settings - Other Linker Flags**에 **-ObjC** 옵션을 추가합니다.
 
 
-![] (http://www.wisetracker.co.kr/wp-content/uploads/2020/03/cocos2d_otherlinker.png)
+![](http://www.wisetracker.co.kr/wp-content/uploads/2020/03/cocos2d_otherlinker.png)
 
 ### 3.3 info.plist 세팅
 XCode 프로젝트의 info.plist 파일에 제공받은 App Analytics Key 정보를 추가합니다
