@@ -1,7 +1,7 @@
 #ifndef __DOP_H__
 #define __DOP_H__
 
-#include <json/json.h>
+#import "json/json.h"
 #include "cocos2d.h"
 
 class DOTBridge {

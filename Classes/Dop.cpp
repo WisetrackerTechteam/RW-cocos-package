@@ -218,12 +218,8 @@ extern "C" { // -- we define our external method to be in C.
         DOTInterface::setUserLogout();
     }
 
-    void DOTBridge::onPlayStart() {
-        DOTInterface::onPlayStart();
-    }
-
     void DOTBridge::onPlayStart(int period) {
-        DOTInterface::onPlayStartWith(period);
+        DOTInterface::onPlayStart(period);
     }
 
     void DOTBridge::onPlayStop() {
@@ -251,8 +247,9 @@ extern "C" { // -- we define our external method to be in C.
     }
 
     void DOTBridge::logClick(std::string clickJson) {
-        DOTInterface::logClick(clickJson.c_str());
+        DOTInterface::logClick(clickJson);
     }
+
 
     void DOXBridge::groupIdentify(char* key, char* value, std::string xIdentifyString) {}
     void DOXBridge::userIdentify(std::string xIdentifyString) {}
